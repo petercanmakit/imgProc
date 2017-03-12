@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<input type="file" id="myFile" />
+
+<canvas id="myCanvas">抱歉，您的浏览器还不支持canvas。</canvas>
+
+<script>
+
+var myCanvas = document.getElementById('myCanvas');
+var myFile = document.getElementById('myFile');
+
+var pageWidth = document.documentElement.clientWidth;
+var pageHeight = document.documentElement.clientHeight;
+
+myFile.onchange = function(event) {
+
+    var selectedFile = event.target.files[0];
+	var reader = new FileReader();
+    reader.onload = putImage2Canvas;
+    reader.readAsDataURL(selectedFile);
+}
+
+function putImage2Canvas(event) {
+    var img = new Image();
+    img.src = event.target.result;
+    img.onload = function(){
+        myCanvas.width = img.width/4;
+        myCanvas.height = img.height/4;
+        var context = myCanvas.getContext('2d');
+        // context.drawImage(img, 0, 0);
+        var imgdata = context.getImageData(0, 0, img.width, img.height);
+        // 处理imgdata
+
+		context.drawImage(img, 0, 0, img.width/5, img.height/5);
+
+		var canvasData = context.getImageData(0, 0, img.width/5, img.height/5);
+
+		// grayscale
+		for ( var x = 0; x < canvasData.width; x++) {
+	        for ( var y = 0; y < canvasData.height; y++) {
+
+	            // Index of the pixel in the array
+	            var idx = (x + y * canvasData.width) * 4;
+	            var r = canvasData.data[idx + 0];
+	                var g = canvasData.data[idx + 1];
+	                var b = canvasData.data[idx + 2];
+
+	                // calculate gray scale value
+	                var gray = .299 * r + .587 * g + .114 * b;
+
+	            // assign gray scale value
+	            canvasData.data[idx + 0] = gray; // Red channel
+	            canvasData.data[idx + 1] = gray; // Green channel
+	            canvasData.data[idx + 2] = gray; // Blue channel
+	            canvasData.data[idx + 3] = 255; // Alpha channel
+
+	            // add black border
+	            if(x < 8 || y < 8 || x > (canvasData.width - 8) || y > (canvasData.height - 8))
+	            {
+	                canvasData.data[idx + 0] = 0;
+	                canvasData.data[idx + 1] = 0;
+	                canvasData.data[idx + 2] = 0;
+	            }
+	        }
+		}
+
+		context.putImageData(canvasData, 0, 0);
+    }
+}
+
+</script>
+
+</body>
+</html>
