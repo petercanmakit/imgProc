@@ -66,13 +66,14 @@ function myFunction(canvas, file, width, height, gray, colorful, zin, zout, zori
 	            canvasData.data[idx + 2] = gray; // Blue channel
 	            canvasData.data[idx + 3] = 255; // Alpha channel
 
-	            // add black border
+				/* add black border
 	            if(x < 8 || y < 8 || x > (canvasData.width - 8) || y > (canvasData.height - 8))
 	            {
 	                canvasData.data[idx + 0] = 0;
 	                canvasData.data[idx + 1] = 0;
 	                canvasData.data[idx + 2] = 0;
 	            }
+				*/
 	        }
 		}
 		context.putImageData(canvasData, 0, 0);
@@ -92,8 +93,8 @@ function myFunction(canvas, file, width, height, gray, colorful, zin, zout, zori
 		context.clearRect(0, 0, myCanvas.width, myCanvas.height);
 
 		var img = img_ori;
-		ori_width = ori_width - img_ori.width*0.1;
-		ori_height = ori_height - img_ori.height*0.1;
+		ori_width = ori_width + img_ori.width*0.1;
+		ori_height = ori_height + img_ori.height*0.1;
 		myCanvas.width = ori_width;
 		myCanvas.height = ori_height;
 
@@ -105,8 +106,8 @@ function myFunction(canvas, file, width, height, gray, colorful, zin, zout, zori
 		context.clearRect(0, 0, myCanvas.width, myCanvas.height);
 		// alert("zoomout!");
 		var img = img_ori;
-		ori_width = ori_width + img_ori.width*0.1;
-		ori_height = ori_height + img_ori.height*0.1;
+		ori_width = ori_width - img_ori.width*0.1;
+		ori_height = ori_height - img_ori.height*0.1;
 		myCanvas.width = ori_width;
 		myCanvas.height = ori_height;
 
