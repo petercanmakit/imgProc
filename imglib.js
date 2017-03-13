@@ -1,3 +1,4 @@
+// The function takes canvas, file and related buttons as parameters
 function myFunction(canvas, file, width, height, gray, colorful, zin, zout, zori) {
     this.myCanvas = canvas;
     this.myFile  = file;
@@ -17,6 +18,7 @@ function myFunction(canvas, file, width, height, gray, colorful, zin, zout, zori
 
 	this.img_ori = new Image();
 
+	// when the image file changes reload it and display
 	myFile.onchange = function(event) {
 	    selectedFile = event.target.files[0];
 		var reader = new FileReader();
@@ -39,7 +41,7 @@ function myFunction(canvas, file, width, height, gray, colorful, zin, zout, zori
 			context.drawImage(img_ori, 0, 0, img_ori.width, img_ori.height);
 	    }
 	}
-
+	// change it into grayscale
 	grayscale.onclick = function() {
 		var img = img_ori;
 		var canvasData = context.getImageData(0, 0, ori_width, ori_height);
@@ -77,12 +79,14 @@ function myFunction(canvas, file, width, height, gray, colorful, zin, zout, zori
 		// context.drawImage(canvasData, 0, 0, img.width/5, img.height/5);
 	}
 
+	// back to colorful image
 	color.onclick = function() {
 		var canvasData = context.getImageData(0, 0, ori_width, ori_height );
 		context.clearRect(0, 0, myCanvas.width, myCanvas.height);
 		context.drawImage(img_ori, 0, 0, ori_width, ori_height);
 	}
 
+	// zoon in by 10%
 	zoomIn.onclick = function() {
 		var canvasData = context.getImageData(0, 0, ori_width, ori_height );
 		context.clearRect(0, 0, myCanvas.width, myCanvas.height);
@@ -92,12 +96,11 @@ function myFunction(canvas, file, width, height, gray, colorful, zin, zout, zori
 		ori_height = ori_height - img_ori.height*0.1;
 		myCanvas.width = ori_width;
 		myCanvas.height = ori_height;
-		// alert("zoomout!");
 
-		// zoom out
 		context.drawImage(img, 0, 0, ori_width, ori_height);
 	}
 
+	// zoom out by 10%
 	zoomOut.onclick = function() {
 		context.clearRect(0, 0, myCanvas.width, myCanvas.height);
 		// alert("zoomout!");
@@ -111,6 +114,7 @@ function myFunction(canvas, file, width, height, gray, colorful, zin, zout, zori
 		context.drawImage(img, 0, 0, ori_width, ori_height);
 	}
 
+	// back to original size
 	original.onclick = function() {
 		context.clearRect(0, 0, myCanvas.width, myCanvas.height);
 		ori_width = img_ori.width;
