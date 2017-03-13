@@ -9,6 +9,9 @@ function myFunction(canvas, file, width, height, gray, colorful, zin, zout, zori
 	this.zoomIn = zin;
 	this.zoomOut = zout;
 	this.original = zori;
+	this.ori_width = 0;
+	this.ori_height = 0;
+	var context;
 
 	var selectedFile;
 
@@ -25,20 +28,21 @@ function myFunction(canvas, file, width, height, gray, colorful, zin, zout, zori
 
 	    img_ori.src = event.target.result;
 	    img_ori.onload = function(){
-	        myCanvas.width = img_ori.width/4;
-	        myCanvas.height = img_ori.height/4;
-	        var context = myCanvas.getContext('2d');
+	        myCanvas.width = img_ori.width;
+	        myCanvas.height = img_ori.height;
+			ori_width = img_ori.width;
+			ori_height = img_ori.height;
+	        context = myCanvas.getContext('2d');
 	        // context.drawImage(img, 0, 0);
 	        // var imgdata = context.getImageData(0, 0, img_ori.width, img_ori.height);
 
-			context.drawImage(img_ori, 0, 0, img_ori.width/5, img_ori.height/5);
+			context.drawImage(img_ori, 0, 0, img_ori.width, img_ori.height);
 	    }
 	}
 
 	grayscale.onclick = function() {
 		var img = img_ori;
-		var context = myCanvas.getContext('2d');
-		var canvasData = context.getImageData(0, 0, img.width/5, img.height/5);
+		var canvasData = context.getImageData(0, 0, ori_width, ori_height);
 		// alert("grayscale!!");
 
 		// grayscale
@@ -73,11 +77,47 @@ function myFunction(canvas, file, width, height, gray, colorful, zin, zout, zori
 		// context.drawImage(canvasData, 0, 0, img.width/5, img.height/5);
 	}
 
-	color.onclick = function(){
-		// alert("back to colorful");
-		var reader = new FileReader();
-	    reader.onload = putImage2Canvas;
-	    reader.readAsDataURL(selectedFile);
+	color.onclick = function() {
+		var canvasData = context.getImageData(0, 0, ori_width, ori_height );
+		context.clearRect(0, 0, myCanvas.width, myCanvas.height);
+		context.drawImage(img_ori, 0, 0, ori_width, ori_height);
+	}
+
+	zoomIn.onclick = function() {
+		var canvasData = context.getImageData(0, 0, ori_width, ori_height );
+		context.clearRect(0, 0, myCanvas.width, myCanvas.height);
+
+		var img = img_ori;
+		ori_width = ori_width - img_ori.width*0.1;
+		ori_height = ori_height - img_ori.height*0.1;
+		myCanvas.width = ori_width;
+		myCanvas.height = ori_height;
+		// alert("zoomout!");
+
+		// zoom out
+		context.drawImage(img, 0, 0, ori_width, ori_height);
+	}
+
+	zoomOut.onclick = function() {
+		context.clearRect(0, 0, myCanvas.width, myCanvas.height);
+		// alert("zoomout!");
+		var img = img_ori;
+		ori_width = ori_width + img_ori.width*0.1;
+		ori_height = ori_height + img_ori.height*0.1;
+		myCanvas.width = ori_width;
+		myCanvas.height = ori_height;
+
+		// zoom out
+		context.drawImage(img, 0, 0, ori_width, ori_height);
+	}
+
+	original.onclick = function() {
+		context.clearRect(0, 0, myCanvas.width, myCanvas.height);
+		ori_width = img_ori.width;
+		ori_height = img_ori.height;
+		myCanvas.width = img_ori.width;
+		myCanvas.height = img_ori.height;
+		context.drawImage(img_ori, 0, 0, img_ori.width, img_ori.height);
 	}
 
 }
