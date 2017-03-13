@@ -2,7 +2,7 @@
 
 Open *img.html* with your favorite browser.
 
-Choose File and then you can try pressing below buttons: **Grayscale**, **Colorful**, **Zoom in**, **Zoom out**, and **Origin**.
+**Choose File** and upload your image, then you can try pressing below buttons: **Grayscale**, **Colorful**, **Zoom in**, **Zoom out**, and **Origin**.
 
 ### Grayscale, Colorful
 Change present image into grayscale or back to colorful.
