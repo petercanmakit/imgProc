@@ -1,7 +1,7 @@
 // The function takes canvas, file and related buttons as parameters
 function myFunction(canvas, file, width, height, gray, colorful, zin, zout, zori) {
-    this.myCanvas = canvas;
-    this.myFile  = file;
+	this.myCanvas = canvas;
+	this.myFile  = file;
 	this.pageWidth = width;
 	this.pageHeight = height;
 	// button
@@ -20,21 +20,21 @@ function myFunction(canvas, file, width, height, gray, colorful, zin, zout, zori
 
 	// when the image file changes reload it and display
 	myFile.onchange = function(event) {
-	    selectedFile = event.target.files[0];
+		selectedFile = event.target.files[0];
 		var reader = new FileReader();
-	    reader.onload = putImage2Canvas;
-	    reader.readAsDataURL(selectedFile);
+		reader.onload = putImage2Canvas;
+		reader.readAsDataURL(selectedFile);
 	}
 
 	function putImage2Canvas(event) {
 
 	    img_ori.src = event.target.result;
 	    img_ori.onload = function(){
-	        myCanvas.width = img_ori.width;
-	        myCanvas.height = img_ori.height;
+			myCanvas.width = img_ori.width;
+			myCanvas.height = img_ori.height;
 			ori_width = img_ori.width;
 			ori_height = img_ori.height;
-	        context = myCanvas.getContext('2d');
+			context = myCanvas.getContext('2d');
 	        // context.drawImage(img, 0, 0);
 	        // var imgdata = context.getImageData(0, 0, img_ori.width, img_ori.height);
 
@@ -54,11 +54,11 @@ function myFunction(canvas, file, width, height, gray, colorful, zin, zout, zori
 	            // Index of the pixel in the array
 	            var idx = (x + y * canvasData.width) * 4;
 	            var r = canvasData.data[idx + 0];
-	                var g = canvasData.data[idx + 1];
-	                var b = canvasData.data[idx + 2];
+	            var g = canvasData.data[idx + 1];
+	            var b = canvasData.data[idx + 2];
 
-	                // calculate gray scale value
-	                var gray = .299 * r + .587 * g + .114 * b;
+	            // calculate gray scale value
+	            var gray = .299 * r + .587 * g + .114 * b;
 
 	            // assign gray scale value
 	            canvasData.data[idx + 0] = gray; // Red channel
