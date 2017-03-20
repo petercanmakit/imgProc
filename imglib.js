@@ -58,7 +58,8 @@ function myFunction(canvas, file, width, height, gray, colorful, zin, zout, zori
 	            var b = canvasData.data[idx + 2];
 
 	            // calculate gray scale value
-	            var gray = .299 * r + .587 * g + .114 * b;
+	            // var gray = .299 * r + .587 * g + .114 * b;
+	            var gray = .2126 * r + .7152 * g + .0722 * b;
 
 	            // assign gray scale value
 	            canvasData.data[idx + 0] = gray; // Red channel
